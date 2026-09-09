@@ -2,6 +2,7 @@ import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { CHECKOUT_URL } from "@/lib/config/external-links";
 
 export const dynamic = "force-dynamic";
 
@@ -33,6 +34,11 @@ export default async function PlanesPage() {
         <p className="text-fg-muted">Elige tu ritmo. Todas las clases vencen a los 30 días.</p>
       </div>
 
+      <p className="rounded-xl bg-accent-soft px-3 py-2.5 text-sm text-fg-muted">
+        Estamos probando el flujo de pago. Por ahora el botón “Comprar” te lleva a una pasarela
+        temporal — el cobro definitivo será con PayPal.
+      </p>
+
       <div className="space-y-3">
         {data.plans.map((plan) => (
           <Card key={plan.id} className="space-y-3">
@@ -55,7 +61,14 @@ export default async function PlanesPage() {
               </p>
             )}
 
-            <button className={cn(buttonVariants({ size: "full" }))}>Comprar</button>
+            <a
+              href={CHECKOUT_URL}
+              target="_blank"
+              rel="noreferrer"
+              className={cn(buttonVariants({ size: "full" }))}
+            >
+              Comprar
+            </a>
           </Card>
         ))}
       </div>

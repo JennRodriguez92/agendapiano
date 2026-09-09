@@ -1,4 +1,7 @@
 import { BookingFlow } from "./booking-flow";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { BOOKING_CALENDAR_URL } from "@/lib/config/external-links";
 
 export const dynamic = "force-dynamic";
 
@@ -30,7 +33,28 @@ export default async function AgendarPage() {
   return (
     <div className="space-y-4">
       <h1 className="font-heading text-xl font-semibold">Agendar mi clase</h1>
-      <BookingFlow {...data} />
+
+      <div className="space-y-2 rounded-xl bg-accent-soft px-3 py-3">
+        <p className="text-sm text-fg-muted">
+          Mientras conectamos la agenda dentro de la app, reserva tu horario directamente en el
+          calendario de Nico:
+        </p>
+        <a
+          href={BOOKING_CALENDAR_URL}
+          target="_blank"
+          rel="noreferrer"
+          className={cn(buttonVariants({ size: "full" }))}
+        >
+          Agendar en Google Calendar
+        </a>
+      </div>
+
+      <div className="space-y-2">
+        <p className="text-xs uppercase tracking-wide text-fg-subtle">
+          Vista previa de cómo se verá aquí dentro
+        </p>
+        <BookingFlow {...data} />
+      </div>
     </div>
   );
 }

@@ -19,6 +19,11 @@ o conectar antes de producción.
   Server Components con datos de ejemplo — ver "Qué falta conectar" abajo.
 - Rutas de cron (`app/api/cron/*`) y el webhook de Wompi (`app/api/webhooks/wompi`),
   protegidas por `CRON_SECRET` / firma del webhook.
+- Enlaces externos temporales para las primeras revisiones (`lib/config/external-links.ts`):
+  el botón "Comprar" de `/planes` abre el link de pago de Hotmart que envió el cliente, y
+  `/agendar` muestra como opción principal el link público de reservas del Google Calendar
+  de Nico. Ambos son un puente mientras se conectan PayPal y la integración OAuth reales —
+  se reemplazan cambiando ese único archivo.
 
 **Qué falta conectar (requiere credenciales reales, no se puede probar en este entorno):**
 - Proyecto de Supabase real (`DATABASE_URL`, claves de Auth) y correr `npm run db:generate`
@@ -42,14 +47,22 @@ marcados `[DECIDIR]` en el código para ubicarlos fácilmente:
    está implementado.
 4. Anticipación mínima para reservar — se asumieron 12 horas (`MIN_BOOKING_NOTICE_HOURS`).
 5. Cuenta de Google de Nico (Workspace o Gmail) y qué calendarios usa hoy.
-6. Alumnos fuera de Colombia / cobro en dólares / PayPal.
-7. Wompi o ePayco — se implementó Wompi por ser la elección por defecto de la spec.
+6. Alumnos fuera de Colombia / cobro en dólares.
+7. **Resuelto por el cliente:** el pago real será con **PayPal** (no Wompi ni ePayco). Falta
+   la integración PayPal en sí — `lib/payments/wompi.ts` queda como referencia de cómo se
+   estructura un webhook de pasarela, pero hay que escribir el equivalente para PayPal
+   (webhooks/checkout de PayPal) cuando el cliente tenga las credenciales. Mientras tanto,
+   `/planes` usa el link de Hotmart de prueba (ver arriba).
 8. Datos de pago manual (Nequi, cuenta bancaria, titular) — placeholders en `db/seed.ts`.
 9. Rúbrica definitiva de niveles — se sembró la rúbrica propuesta en la sección 4.5.
 10. Frases motivadoras iniciales, escritas por Nico.
 11. Nombre del área del alumno dentro de la app.
-12. Paleta y logotipo definitivos — se usó la paleta azul oscuro/negro de referencia que
-    envió el cliente (ver `app/globals.css`).
+12. **Paleta resuelta:** azul oscuro/negro de referencia que envió el cliente (ver
+    `app/globals.css`). **Logotipo pendiente:** el cliente compartió la imagen del logo de
+    NicoPiano en el chat, pero esta sesión no tiene forma de leer los bytes de una imagen
+    pegada en la conversación — solo puede guardar un archivo si se sube al repo o se
+    comparte por URL. Sube el logo (PNG/SVG) a `public/logo.png` (o pásame una URL) y lo
+    conecto en `app/layout.tsx`, `app/page.tsx` y el favicon.
 
 ## Desarrollo local
 
