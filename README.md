@@ -24,6 +24,14 @@ o conectar antes de producción.
   `/agendar` muestra como opción principal el link público de reservas del Google Calendar
   de Nico. Ambos son un puente mientras se conectan PayPal y la integración OAuth reales —
   se reemplazan cambiando ese único archivo.
+- `/` es ahora la pantalla de entrada (antes había una portada intermedia con un botón
+  "Entrar"): muestra el wordmark de NicoPiano, login con correo/contraseña, enlace mágico
+  o "Entrar con Google", y el link a `/registro`. `/login` quedó como redirect a `/` por si
+  algo lo enlaza. `/registro` es autoregistro abierto (correo, contraseña, nombre) — más
+  simple que el flujo de invitación con token de `/invitacion` que pedía la spec original,
+  a pedido del cliente para las primeras pruebas. `db/triggers.sql` crea automáticamente la
+  fila de `student_profiles` cuando alguien se registra (por correo o Google), vía un
+  trigger sobre `auth.users` — aplícalo junto con `db/rls.sql`.
 
 **Qué falta conectar (requiere credenciales reales, no se puede probar en este entorno):**
 - Proyecto de Supabase real (`DATABASE_URL`, claves de Auth) y correr `npm run db:generate`
@@ -32,6 +40,9 @@ o conectar antes de producción.
   completo en su forma de integración pero lanza un error explícito hasta que exista un
   `refresh_token` guardado).
 - Credenciales de Wompi (o ePayco, ver decisión pendiente #7 abajo) y Resend.
+- El proveedor Google en Supabase Auth (Authentication → Providers → Google, con el
+  Client ID/Secret de Google Cloud) para que "Entrar con Google" funcione — el botón ya
+  llama a `supabase.auth.signInWithOAuth`, solo falta activar el proveedor en el proyecto.
 - Las páginas usan datos de ejemplo (`TODO` en cada archivo) en vez de consultas reales:
   la lógica de negocio que sí queda conectada a la base de datos vive en `/lib`, las
   pantallas solo necesitan que se les pase el resultado de esas funciones.
@@ -61,8 +72,10 @@ marcados `[DECIDIR]` en el código para ubicarlos fácilmente:
     `app/globals.css`). **Logotipo pendiente:** el cliente compartió la imagen del logo de
     NicoPiano en el chat, pero esta sesión no tiene forma de leer los bytes de una imagen
     pegada en la conversación — solo puede guardar un archivo si se sube al repo o se
-    comparte por URL. Sube el logo (PNG/SVG) a `public/logo.png` (o pásame una URL) y lo
-    conecto en `app/layout.tsx`, `app/page.tsx` y el favicon.
+    comparte por URL. Mientras tanto, `components/logo.tsx` es un wordmark provisional
+    (texto "NicoPiano" + nota musical en SVG) usado en `/` y `/registro`. Sube el logo real
+    (PNG/SVG) a `public/logo.png` (o pásame una URL) y lo conecto ahí mismo sin tocar las
+    páginas que ya usan `<Logo />`.
 
 ## Desarrollo local
 
