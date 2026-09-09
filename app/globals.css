@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+/*
+  Tu Profe de Piano — tokens de diseño (sección 11 de la spec).
+  Paleta: azul oscuro / negro de fondo, blanco y azul claro de texto,
+  un único acento saturado reservado para la acción primaria y la urgencia.
+  Referencia visual: apps fintech dark-mode (Nexora) provistas por el cliente.
+*/
+
+:root {
+  /* Superficies */
+  --color-bg: #0a1220;
+  --color-bg-elevated: #101b30;
+  --color-bg-elevated-2: #16223c;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+
+  /* Texto */
+  --color-fg: #f4f7fc;
+  --color-fg-muted: #a9b6cf;
+  --color-fg-subtle: #6d7c9c;
+
+  /* Acento — acción primaria (Agendar) */
+  --color-accent: #3d7bfb;
+  --color-accent-hover: #5c8fff;
+  --color-accent-fg: #ffffff;
+  --color-accent-soft: rgba(61, 123, 251, 0.14);
+
+  /* Urgencia de vigencia (RN-11 a RN-16, sección 11) */
+  --color-urgency-normal: #3d7bfb;
+  --color-urgency-warning: #f5a524;
+  --color-urgency-critical: #f5484c;
+
+  /* Estados */
+  --color-success: #34d399;
+  --color-danger: #f5484c;
+}
+
+@theme inline {
+  --color-bg: var(--color-bg);
+  --color-bg-elevated: var(--color-bg-elevated);
+  --color-bg-elevated-2: var(--color-bg-elevated-2);
+  --color-border: var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+
+  --color-fg: var(--color-fg);
+  --color-fg-muted: var(--color-fg-muted);
+  --color-fg-subtle: var(--color-fg-subtle);
+
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-fg: var(--color-accent-fg);
+  --color-accent-soft: var(--color-accent-soft);
+
+  --color-urgency-normal: var(--color-urgency-normal);
+  --color-urgency-warning: var(--color-urgency-warning);
+  --color-urgency-critical: var(--color-urgency-critical);
+
+  --color-success: var(--color-success);
+  --color-danger: var(--color-danger);
+
+  --font-heading: var(--font-poppins);
+  --font-sans: var(--font-montserrat);
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, .font-heading {
+  font-family: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
