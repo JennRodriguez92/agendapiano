@@ -98,20 +98,17 @@ marcados `[DECIDIR]` en el código para ubicarlos fácilmente:
    WhatsApp para comprar su siguiente pack (botón en `/planes` y `/cuenta`) y Nico cierra el
    pago por fuera (antes se había hablado de PayPal). `lib/payments/wompi.ts` y `manual.ts`
    quedan como referencia de un motor de pagos por si algún día se automatiza, pero no están
-   conectados a ninguna pantalla. **Falta:** el número de WhatsApp de Nico
-   (`NEXT_PUBLIC_NICO_WHATSAPP_NUMBER`) — sin él esos botones aparecen deshabilitados.
+   conectados a ninguna pantalla. **Resuelto:** el número de WhatsApp de Nico ya está
+   configurado en `lib/config/external-links.ts`.
 8. Datos de pago manual (Nequi, cuenta bancaria, titular) — placeholders en `db/seed.ts`.
 9. Rúbrica definitiva de niveles — se sembró la rúbrica propuesta en la sección 4.5.
 10. Frases motivadoras iniciales, escritas por Nico.
 11. Nombre del área del alumno dentro de la app.
-12. **Paleta resuelta:** azul oscuro/negro de referencia que envió el cliente (ver
-    `app/globals.css`). **Logotipo pendiente:** el cliente compartió la imagen del logo de
-    NicoPiano en el chat, pero esta sesión no tiene forma de leer los bytes de una imagen
-    pegada en la conversación — solo puede guardar un archivo si se sube al repo o se
-    comparte por URL. Mientras tanto, `components/logo.tsx` es un wordmark provisional
-    (texto "NicoPiano" + nota musical en SVG) usado en `/` y `/registro`. Sube el logo real
-    (PNG/SVG) a `public/logo.png` (o pásame una URL) y lo conecto ahí mismo sin tocar las
-    páginas que ya usan `<Logo />`.
+12. **Resuelto:** paleta azul oscuro/negro (ver `app/globals.css`) y logotipo — el cliente
+    subió el archivo real a `public/logo.png` (vía GitHub, ya que esta sesión no puede leer
+    los bytes de una imagen pegada en el chat ni descargar de una URL bloqueada por su
+    política de red) y `components/logo.tsx` ya lo usa con `next/image` en `/`, `/registro`,
+    `/recuperar` y `/actualizar-contrasena`.
 
 ## Desarrollo local
 
