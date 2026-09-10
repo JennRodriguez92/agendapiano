@@ -57,14 +57,22 @@ o conectar antes de producción.
 
 ## Conectar Supabase de verdad
 
-Ya tenemos el proyecto (`euwkyphzakcfimbxpmys`) y sus claves — faltan dos cosas que solo tú
-puedes darme porque yo no puedo llegar hasta Supabase desde aquí:
+Esta sesión no puede llegar hasta `*.supabase.co` (ver más arriba), así que crear las
+tablas tiene que hacerse desde otro lado. Hay dos formas — la primera no necesita terminal
+ni Node.js, así que es la más simple si apenas estás empezando:
 
-1. **La contraseña real de la base de datos.** El connection string que compartiste todavía
-   tiene el texto `[YOUR-PASSWORD]` sin reemplazar — eso es un molde, no la contraseña. Se
-   consigue (o se resetea si no la recuerdas) en Supabase → tu proyecto → **Project Settings
-   → Database → Database password**.
-2. **Correrlo desde un lugar con acceso a internet normal** — tu computador, por ejemplo:
+### Opción A — pegando SQL en Supabase (recomendada, sin instalar nada)
+
+Ve a tu proyecto en supabase.com → menú lateral **SQL Editor** → **New query**. Ahí pegas
+el contenido de cada uno de estos archivos, en este orden, dándole **Run** después de
+cada uno:
+
+1. `db/migrations/0000_bouncy_spyke.sql` — crea las 18 tablas.
+2. `db/seed.sql` — siembra los 4 planes, la configuración de Nico y la rúbrica de niveles.
+3. `db/rls.sql` — activa los permisos de seguridad (cada alumno solo ve sus propios datos).
+4. `db/triggers.sql` — crea automáticamente el perfil del pianista cuando alguien se registra.
+
+### Opción B — desde tu computador (necesitas Node.js instalado)
 
 ```bash
 git clone https://github.com/JennRodriguez92/agendapiano.git
@@ -80,7 +88,10 @@ npm run db:seed
 npm run dev
 ```
 
-Esto también te sirve como el preview local que buscabas: abre `http://localhost:3000`.
+Esto además te sirve como preview local: abre `http://localhost:3000`. Para ver la app sin
+tocar el computador, despliega el repo en Vercel (vercel.com/new) — funciona sin ninguna
+variable de entorno para lo visual, y con las mismas 4 de arriba para que el login y los
+datos reales funcionen.
 
 ## Decisiones pendientes del cliente — sección 17 de la spec
 
