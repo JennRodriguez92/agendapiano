@@ -1,19 +1,22 @@
+import { MessageCircle } from "lucide-react";
 import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { CHECKOUT_URL } from "@/lib/config/external-links";
+import { NICO_WHATSAPP_NUMBER } from "@/lib/config/external-links";
+import { buildWhatsAppLink, whatsappTemplates } from "@/lib/notifications/whatsapp";
 
 export const dynamic = "force-dynamic";
 
 /**
- * sección 8.5. [DECIDIR] sección 17.1: precios y nombres comerciales
- * definitivos. Se muestran los 4 planes base de la sección 4.1 con precios
- * de ejemplo — deben reemplazarse por lib/payments/plans reales antes de
- * salir a producción.
+ * sección 8.5, ajustada a pedido del cliente (sept. 2026): no se paga dentro
+ * de la app — el pianista escribe a Nico por WhatsApp para comprar su
+ * siguiente pack. [DECIDIR] sección 17.1: precios y nombres comerciales
+ * definitivos. TODO: reemplazar por lib/payments/plans reales.
  */
 async function getPlanesData() {
   return {
+    studentFirstName: "Laura",
     recommendedPlanId: "pack-8",
     plans: [
       { id: "clase-individual", name: "Clase individual", classCount: 1, priceLabel: "$—", validityDays: 30, pace: null },
@@ -26,6 +29,7 @@ async function getPlanesData() {
 
 export default async function PlanesPage() {
   const data = await getPlanesData();
+  const hasWhatsAppNumber = NICO_WHATSAPP_NUMBER.length > 0;
 
   return (
     <div className="space-y-4">
@@ -35,8 +39,8 @@ export default async function PlanesPage() {
       </div>
 
       <p className="rounded-xl bg-accent-soft px-3 py-2.5 text-sm text-fg-muted">
-        Estamos probando el flujo de pago. Por ahora el botón “Comprar” te lleva a una pasarela
-        temporal — el cobro definitivo será con PayPal.
+        Para comprar, escríbele a Nico por WhatsApp — él te confirma el pago y activa tus
+        clases.
       </p>
 
       <div className="space-y-3">
@@ -61,14 +65,29 @@ export default async function PlanesPage() {
               </p>
             )}
 
-            <a
-              href={CHECKOUT_URL}
-              target="_blank"
-              rel="noreferrer"
-              className={cn(buttonVariants({ size: "full" }))}
-            >
-              Comprar
-            </a>
+            {hasWhatsAppNumber ? (
+              <a
+                href={buildWhatsAppLink(
+                  NICO_WHATSAPP_NUMBER,
+                  whatsappTemplates.wantsToBuyPlan(data.studentFirstName, plan.name)
+                )}
+                target="_blank"
+                rel="noreferrer"
+                className={cn(buttonVariants({ size: "full" }), "gap-2")}
+              >
+                <MessageCircle className="size-4" aria-hidden />
+                Comprar por WhatsApp
+              </a>
+            ) : (
+              <button
+                type="button"
+                disabled
+                title="Falta configurar el número de WhatsApp de Nico"
+                className={cn(buttonVariants({ size: "full", variant: "secondary" }))}
+              >
+                Comprar por WhatsApp
+              </button>
+            )}
           </Card>
         ))}
       </div>

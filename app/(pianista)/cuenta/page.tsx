@@ -1,4 +1,10 @@
+import Link from "next/link";
+import { MessageCircle } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import { NICO_WHATSAPP_NUMBER } from "@/lib/config/external-links";
+import { buildWhatsAppLink, whatsappTemplates } from "@/lib/notifications/whatsapp";
 
 export const dynamic = "force-dynamic";
 
@@ -37,7 +43,21 @@ export default async function CuentaPage() {
         <Field label="Recordatorios por WhatsApp" value={data.whatsappOptIn ? "Activados" : "Desactivados"} />
       </Card>
 
-      <button className="w-full text-center text-sm text-fg-muted">Cambiar contraseña</button>
+      {NICO_WHATSAPP_NUMBER && (
+        <a
+          href={buildWhatsAppLink(NICO_WHATSAPP_NUMBER, whatsappTemplates.generalQuestion(data.fullName.split(" ")[0]))}
+          target="_blank"
+          rel="noreferrer"
+          className={cn(buttonVariants({ size: "full", variant: "secondary" }), "gap-2")}
+        >
+          <MessageCircle className="size-4" aria-hidden />
+          Escribirle a Nico
+        </a>
+      )}
+
+      <Link href="/recuperar" className="block w-full text-center text-sm text-fg-muted">
+        Cambiar contraseña
+      </Link>
     </div>
   );
 }

@@ -22,4 +22,10 @@ export const whatsappTemplates = {
     `${name}, quedó agendada tu clase para ${dateLabel}. Enlace de Meet: ${meetUrl}`,
   classCancelledByTeacher: (name: string, rescheduleUrl: string) =>
     `${name}, tuve que cancelar tu clase. Se te devolvió el crédito y tu vencimiento se extendió. Reagenda aquí: ${rescheduleUrl}`,
+
+  // Estos dos los escribe el pianista hacia Nico (botón en /planes y /cuenta):
+  wantsToBuyPlan: (studentName: string, planName: string) =>
+    `Hola Nico, soy ${studentName}. Quiero comprar el plan "${planName}".`,
+  generalQuestion: (studentName: string) =>
+    `Hola Nico, soy ${studentName}, tengo una pregunta sobre mis clases.`,
 } as const;

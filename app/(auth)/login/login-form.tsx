@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -108,6 +109,12 @@ export function LoginForm() {
             className="w-full rounded-xl border border-border-strong bg-bg-elevated px-4 py-3 text-[15px] outline-none focus:border-accent"
           />
         </div>
+      )}
+
+      {mode === "password" && (
+        <Link href="/recuperar" className="block text-right text-sm text-fg-muted">
+          ¿Olvidaste tu contraseña?
+        </Link>
       )}
 
       {errorMessage && <p className="text-sm text-danger">{errorMessage}</p>}
