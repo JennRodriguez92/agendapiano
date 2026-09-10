@@ -18,9 +18,9 @@ export const BOOKING_CALENDAR_URL =
 
 /**
  * Número de WhatsApp de Nico, en formato internacional sin espacios ni "+"
- * (ej. "573001234567"). [DECIDIR] pendiente de que el cliente lo confirme —
- * mientras esté vacío, los botones de WhatsApp de la app (ver /planes y
- * lib/notifications/whatsapp.ts) quedan deshabilitados en vez de abrir un
- * chat sin destinatario.
+ * — confirmado por el cliente. Los botones de WhatsApp de la app (ver
+ * /planes, /cuenta y lib/notifications/whatsapp.ts) se deshabilitan solo si
+ * esto llegara a quedar vacío, para no abrir nunca un chat sin destinatario.
  */
-export const NICO_WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_NICO_WHATSAPP_NUMBER ?? "";
+export const NICO_WHATSAPP_NUMBER =
+  process.env.NEXT_PUBLIC_NICO_WHATSAPP_NUMBER ?? "573202193726";
