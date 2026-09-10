@@ -30,7 +30,7 @@ export function RegistroForm() {
         password,
         options: {
           data: { full_name: fullName },
-          emailRedirectTo: `${window.location.origin}/inicio`,
+          emailRedirectTo: `${window.location.origin}/auth/callback?next=/inicio`,
         },
       });
       if (error) throw error;

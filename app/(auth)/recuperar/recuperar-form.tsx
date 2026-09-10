@@ -18,7 +18,7 @@ export function RecuperarForm() {
 
     try {
       const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/actualizar-contrasena`,
+        redirectTo: `${window.location.origin}/auth/callback?next=/actualizar-contrasena`,
       });
       if (error) throw error;
       setStatus("sent");
